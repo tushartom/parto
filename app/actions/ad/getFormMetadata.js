@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { cache } from "react";
-
+export const dynamic = "force-dynamic";
 export const getFormMetadata = cache(async () => {
   try {
     // Fetch brands and categories in parallel for maximum speed

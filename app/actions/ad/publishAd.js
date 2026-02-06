@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import slugify from "slugify";
 import { requireSupplier } from "@/lib/supplier-auth";
 import { makeImagesPermanent } from "@/lib/cloudinary";
-
+export const dynamic = "force-dynamic";
 export async function publishAd(formData) {
   try {
     const supplier = await requireSupplier();

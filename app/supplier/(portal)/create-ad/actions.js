@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireSupplier } from "@/lib/supplier-auth";
 import cloudinary from "@/lib/cloudinary"; // Your Cloudinary config
-
+export const dynamic = "force-dynamic";
 export async function getModelsByBrand(brandId) {
   if (!brandId) return [];
 

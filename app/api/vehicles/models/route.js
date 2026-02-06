@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-
+export const dynamic = "force-dynamic";
 /**
  * GET /api/vehicles/models?brandId=XYZ
  * Fetches active vehicle models for a specific brand

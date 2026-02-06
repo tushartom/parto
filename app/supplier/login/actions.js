@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-
+export const dynamic = "force-dynamic";
 export async function verifySupplierExists(fullPhoneNumber) {
   // Format check: Ensure we handle numbers correctly for Prisma
   const dbFormattedNumber = fullPhoneNumber

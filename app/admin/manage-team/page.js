@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import TeamTable from "./TeamTable";
 import { auth } from "@/auth";
 import SessionWrapper from "@/components/admin/SessionWrapper";
+export const dynamic = "force-dynamic";
 export default async function ManageTeamPage() {
 const session = await auth();
   // 2. Role Check: Only Super Admins allowed

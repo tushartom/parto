@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { requireSupplier } from "@/lib/supplier-auth";
 import SupplierProfile from "@/components/supplier/SupplierProfile";
-
+export const dynamic = "force-dynamic";
 export default async function ProfilePage() {
   // 1. Get the authenticated supplier's ID
   const session = await requireSupplier();

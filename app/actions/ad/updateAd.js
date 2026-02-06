@@ -7,6 +7,7 @@ import slugify from "slugify";
 import { deleteAssets } from "@/lib/cloudinary";
 import { requireSupplier } from "@/lib/supplier-auth";
 import { makeImagesPermanent } from "@/lib/cloudinary";
+export const dynamic = "force-dynamic";
 /**
  * Update an existing Part Advertisement
  * @param {string} adId - The ID of the ad to update

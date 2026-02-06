@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/Toaster";
 import SessionWrapper from "@/components/admin/SessionWrapper";
 import { auth } from "@/auth";
 import AdminClientGuard from "@/components/admin/AdminClientGuard";
-
+export const dynamic = "force-dynamic";
 export default async function AdminLayout({ children }) {
   // 1. Fetch session on the server (Instant hydration)
   const session = await auth();

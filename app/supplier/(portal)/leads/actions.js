@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { requireSupplier } from "@/lib/supplier-auth";
 import { revalidatePath } from "next/cache";
-
+export const dynamic = "force-dynamic";
 /**
  * 1. FETCH MARKET FEED (ALL)
  * Fetches leads matching supplier brands, excluding those they've ignored.

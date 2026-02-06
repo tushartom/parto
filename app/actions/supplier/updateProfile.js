@@ -4,7 +4,7 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { requireSupplier } from "@/lib/supplier-auth";
-
+export const dynamic = "force-dynamic";
 export async function updateSupplierProfile(formData) {
   try {
     const session = await requireSupplier();

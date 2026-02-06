@@ -4,6 +4,7 @@ import { z } from "zod";
 import { requireAdmin } from "@/lib/admin-auth"; //
 import { adminApiError } from "@/lib/admin-api"; //
 
+export const dynamic = "force-dynamic";
 const QuerySchema = z.object({
   status: z.enum(["PENDING", "VERIFIED", "REJECTED"]),
   page: z.string().transform(Number).pipe(z.number().min(1)).catch(1),

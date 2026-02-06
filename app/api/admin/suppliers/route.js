@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
 import { adminApiError } from "@/lib/admin-api";
 import { requireAdmin } from "@/lib/admin-auth";
-
+export const dynamic = "force-dynamic";
 
 export async function POST(request) {
   try {

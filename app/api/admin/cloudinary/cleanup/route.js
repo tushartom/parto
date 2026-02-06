@@ -3,6 +3,7 @@ import cloudinary from "@/lib/cloudinary";
 import { requireAdmin } from "@/lib/admin-auth"; //
 import { adminApiError } from "@/lib/admin-api"; //
 
+export const dynamic = "force-dynamic";
 /**
  * POST: Handles direct deletion of assets from Cloudinary.
  * Protected: Prevents unauthorized users from wiping your storage.

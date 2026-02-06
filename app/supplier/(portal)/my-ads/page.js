@@ -4,7 +4,7 @@ import { Plus, LayoutGrid } from "lucide-react";
 import MyAdsList from "@/components/supplier/MyAdsList";
 import { requireSupplier } from "@/lib/supplier-auth";
 
-
+export const dynamic = "force-dynamic";
 async function getSupplierAds() {
   // In a real app, get this ID from your auth session (e.g., Kinde/NextAuth)
   const supplier = await requireSupplier();

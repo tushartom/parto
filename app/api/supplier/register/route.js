@@ -1,7 +1,7 @@
   import prisma from "@/lib/prisma";
   import { NextResponse } from "next/server";
   import { z } from "zod";
-
+export const dynamic = "force-dynamic";
   /**
    * Senior Architect Note:
    * We now use the exact same schema structure as the frontend
