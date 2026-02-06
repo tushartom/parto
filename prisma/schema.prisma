@@ -1,0 +1,305 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Brand {
+  id        String         @id @default(cuid())
+  slug      String         @unique
+  name      String         @unique
+  isActive  Boolean        @default(true)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  models    VehicleModel[]
+  suppliers Supplier[]
+  ads       PartAd[]
+}
+
+model VehicleModel {
+  id        String   @id @default(cuid())
+  brandId   String
+  slug      String
+  name      String
+  startYear Int
+  endYear   Int?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  brand     Brand    @relation(fields: [brandId], references: [id])
+  ads       PartAd[]
+  @@unique([brandId, slug])
+  @@index([brandId])
+}
+
+model PartCategory {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ads       PartAd[]
+  parts     Part[]
+}
+
+model Part {
+  id         String       @id @default(cuid())
+  categoryId String
+  slug       String
+  name       String
+  isActive   Boolean      @default(true)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  category   PartCategory @relation(fields: [categoryId], references: [id])
+  ads        PartAd[]
+  @@unique([categoryId, slug])
+  @@index([categoryId])
+}
+
+
+model City {
+  id         String     @id @default(cuid())
+  name       String     @unique
+  slug       String     @unique // e.g., 'bahadurgarh'
+  state      String     // e.g., 'HARYANA'
+  localities Locality[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([slug])
+}
+
+model Locality {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   // e.g., 'sector-6'
+  cityId    String
+  city      City     @relation(fields: [cityId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Ensures slug is unique within a specific city
+  @@unique([cityId, slug])
+  @@index([slug])
+}
+
+// Identity: Represents a unique customer by phone number
+model Buyer {
+  id          String     @id @default(cuid())
+  phoneNumber String     @unique
+  state       BuyerState @default(NORMAL)
+  leads       Lead[]     
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum BuyerState {
+  NORMAL
+  SPAM_RISK
+  BLOCKED
+}
+
+// Operational: Central entity for part requests
+model Lead {
+  id                String      @id @default(cuid())
+  buyerId           String
+  buyer             Buyer       @relation(fields: [buyerId], references: [id])
+  source            LeadSource  @default(DIRECT_REQUEST)
+
+  // Vehicle Details
+  vehicleMake       String
+  vehicleModel      String
+  vehicleYear       Int
+  requestedParts    String[]    // List of specific part names
+  condition         String      // NEW | USED | DOESNT_MATTER
+  locationText      String      // Buyer's city/area context
+  
+  // Lifecycle & SLA
+  state             LeadState   @default(NEW)
+  slaDeadline       DateTime    // 2-hour window for first engagement
+  firstEngagementAt DateTime?   
+  
+  unlocks           LeadUnlock[]
+
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@index([buyerId])
+  @@index([state])
+}
+
+enum LeadSource {
+  DIRECT_REQUEST
+  PART_AD
+}
+
+enum LeadState {
+  NEW
+  ACTIVE
+  SLA_BREACH
+  DROPPED
+}
+
+// --- ENUMS FOR DATA INTEGRITY ---
+
+enum PartCondition {
+  NEW
+  USED
+  BOTH
+}
+
+enum SupplierLeadStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  CONVERTED
+}
+
+// --- SUPPLIER ONBOARDING (Interest/Leads) ---
+
+model SupplierLead {
+  id              String             @id @default(cuid())
+  shopName        String
+  contactName     String
+  whatsAppNumber  String             // User-provided phone
+  partsCondition  PartCondition      @default(BOTH)
+  locationText    String             // Karol Bagh, Delhi
+  status          SupplierLeadStatus @default(PENDING)
+  submittedAt     DateTime           @default(now())
+  adminNotes      String?            @db.Text
+
+  @@index([status])
+}
+
+// --- VERIFIED SUPPLIERS (Verified Profiles) ---
+
+model Supplier {
+  id              String        @id @default(cuid())
+  shopName        String
+  contactName     String
+  whatsAppNumber  String        @unique // Identity Key
+  partsCondition  PartCondition @default(BOTH)
+  city            String?
+  locality        String?
+  state           String?
+  locationText    String
+  isLocationVerified Boolean      @default(true)
+  brands          Brand[]      // ["Maruti Suzuki", "Hyundai"]
+  shopImageUrl    String?       // URL to Unsplash/Cloudinary
+  shopImagePublicId String?
+  isActive        Boolean       @default(true)
+  verifiedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  ads             PartAd[]
+  unlocks         LeadUnlock[]
+
+  @@index([whatsAppNumber])
+}
+
+
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+}
+
+model Admin {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  name        String?
+  role        AdminRole @default(ADMIN)
+  isActive    Boolean   @default(true)
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([isActive])
+}
+
+model LeadUnlock {
+  id              String       @id @default(cuid())
+  leadId          String
+  lead            Lead         @relation(fields: [leadId], references: [id])
+  supplierId      String
+  supplier        Supplier     @relation(fields: [supplierId], references: [id])
+  
+  // --- CORE WORKFLOW FIELDS ---
+  
+  // 1. Double Blue Tick Logic
+  // Set to true the first time any contact icon is clicked
+  hasInteracted   Boolean      @default(false)
+  firstInteractedAt DateTime?  // Records when they first reached out
+
+  // 2. Shortlist Logic
+  // Toggle for the "Star" icon
+  isStarred       Boolean      @default(false)
+
+  // 3. Archive/Ignore Logic
+  // When true, hide from "All" and move to "Ignored" tab
+  isIgnored       Boolean      @default(false)
+
+  @@unique([leadId, supplierId]) 
+  @@index([supplierId])
+}
+
+
+
+// schema.prisma
+
+enum AdStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  SOLD
+}
+enum PartConditionSupplier {
+  USED
+  NEW
+  ANY
+}
+model PartAd {
+  id              String                @id @default(cuid())
+  supplierId      String
+  brandId         String
+  modelId         String
+  categoryId      String
+  partId          String?
+  customPartName  String?
+  slug            String                @unique
+  oemNumber       String?
+  title           String
+  images          Json                  // Stores [{public_id, url}]
+  year            Int
+  condition       PartConditionSupplier @default(USED)
+  
+  price           Decimal?              @db.Decimal(10, 2)
+  askForPrice     Boolean               @default(false)
+  
+  // NEW: Synced with your Action
+  deliveryOption  String?               // e.g., "PAN_INDIA"
+  supplierNote    String?               @db.VarChar(255)
+
+  views           Int                   @default(0)
+  inquiries       Int                   @default(0)
+  status          AdStatus              @default(PENDING) // Default to PENDING for review
+  
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  deletedAt       DateTime?
+
+  // Relations
+  supplier        Supplier              @relation(fields: [supplierId], references: [id])
+  brand           Brand                 @relation(fields: [brandId], references: [id])
+  model           VehicleModel          @relation(fields: [modelId], references: [id])
+  category        PartCategory          @relation(fields: [categoryId], references: [id])
+  part            Part?                 @relation(fields: [partId], references: [id])
+
+  @@index([supplierId])
+  @@index([status])
+  @@index([brandId, modelId, status])
+  @@index([status, createdAt(sort: Desc)])
+}
