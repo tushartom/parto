@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { deleteAssets } from "@/lib/cloudinary";
 import { requireSupplier } from "@/lib/supplier-auth";
-export const dynamic = "force-dynamic";
+
 /**
  * Soft deletes a Part Advertisement and cleans up storage.
  * @param {string} adId - The ID of the ad to delete

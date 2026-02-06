@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 // import {unstable_update } from "@/auth";
-export const dynamic = "force-dynamic";
+
 
 export async function toggleAdminStatus(adminId, currentStatus) {
   try {
