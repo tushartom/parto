@@ -98,36 +98,41 @@ export function SupplierLeadsInbox() {
       {/* HEADER SECTION (Remains standard) */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-black text-slate-900 uppercase italic tracking-tight">
-            Supplier Leads
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            Supplier Onboarding
           </h2>
-          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mt-1">
-            Last Sync: {lastUpdated || "--:--"}
-          </p>
+          <div className="flex items-center gap-2 mt-2">
+            <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
+            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+              Last updated- {lastUpdated || "Initializing..."}
+            </p>
+          </div>
         </div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center bg-white border-2 border-slate-900 rounded-xl overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          {/* Pagination */}
+          <div className="flex items-center bg-white border border-slate-200 rounded-2xl p-1 shadow-sm">
             <button
               disabled={currentPage === 1}
               onClick={() => setCurrentPage((p) => p - 1)}
-              className="p-2.5 hover:bg-slate-50 disabled:opacity-30 border-r-2 border-slate-900"
+              className="p-2 hover:bg-slate-50 disabled:opacity-30 rounded-xl transition-colors"
             >
-              <ChevronLeft size={18} strokeWidth={3} />
+              <ChevronLeft size={18} />
             </button>
-            <span className="px-5 font-black text-[11px] uppercase italic text-slate-700">
-              {currentPage} / {totalPages}
+            <span className="px-4 text-[12px] font-bold text-slate-600">
+              Page {currentPage} <span className="text-slate-300 mx-1">/</span>{" "}
+              {totalPages}
             </span>
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage((p) => p + 1)}
-              className="p-2.5 hover:bg-slate-50 disabled:opacity-30 border-l-2 border-slate-900"
+              className="p-2 hover:bg-slate-50 disabled:opacity-30 rounded-xl transition-colors"
             >
-              <ChevronRight size={18} strokeWidth={3} />
+              <ChevronRight size={18} />
             </button>
           </div>
           <button
             onClick={handleGlobalRefresh}
-            className="p-3 bg-white border-2 border-slate-900 rounded-xl shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            className="p-3  text-white rounded-2xl shadow-lg shadow-indigo-100 transition-all active:scale-95"
           >
             <RefreshCw
               className={cn(
@@ -141,7 +146,7 @@ export function SupplierLeadsInbox() {
       </div>
 
       {/* TABS (Remains standard) */}
-      <div className="flex gap-2.5 p-1.5 bg-slate-100 border-2 border-slate-900 rounded-2xl w-fit">
+      <div className="flex gap-1 p-1 bg-white border border-slate-200 rounded-2xl w-fit shadow-sm">
         {["PENDING", "VERIFIED", "REJECTED"].map((s) => (
           <button
             key={s}
@@ -150,10 +155,10 @@ export function SupplierLeadsInbox() {
               setCurrentPage(1);
             }}
             className={cn(
-              "px-6 py-2 rounded-xl font-black italic text-[10px] uppercase tracking-widest transition-all",
+              "px-6 py-2.5 rounded-xl font-bold text-[11px] tracking-wider transition-all",
               currentStatus === s
-                ? "bg-slate-900 text-white shadow-[4px_4px_0px_0px_rgba(59,130,246,1)]"
-                : "text-slate-500 hover:text-slate-900",
+                ? "bg-blue-600 text-white shadow-md shadow-blue-100"
+                : "text-slate-500 hover:text-slate-900 hover:bg-slate-50",
             )}
           >
             {s} ({cache.counts[s]})
@@ -162,31 +167,31 @@ export function SupplierLeadsInbox() {
       </div>
 
       {/* TABLE CONTAINER WITH FIXED CENTERED STATES */}
-      <div className="bg-white border-2 border-slate-900 rounded-[2rem] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-[1rem] shadow-sm overflow-hidden">
         {/* Horizontal Scroll Area only for the Headers & Existing Data */}
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[1400px]">
-            <thead className="border-b-2 border-slate-900 bg-slate-50/50">
+            <thead className="border-b-2 border-slate-200 bg-slate-50/50">
               <tr>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
-                  Shop Name
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
+                  Shop
                 </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
-                  Owner
-                </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
                   WhatsApp
                 </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 text-center">
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
+                  Location
+                </th>
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600 text-center">
                   Condition
                 </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
                   Submitted
                 </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500">
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
                   Admin Notes
                 </th>
-                <th className="px-8 py-5 text-[11px] font-bold uppercase tracking-[0.15em] text-slate-500 text-right">
+                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600 text-right">
                   Actions
                 </th>
               </tr>
