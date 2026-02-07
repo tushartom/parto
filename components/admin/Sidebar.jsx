@@ -58,7 +58,7 @@ export function Sidebar({ isOpen, onClose }) {
               href={item.href}
               onClick={() => onClose()} // Auto-close on mobile selection
               className={cn(
-                "flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold uppercase text-[10px] tracking-widest transition-all duration-300",
+                "flex items-center gap-3 px-4 py-3.5 rounded-2xl font-bold uppercase text-[11px] tracking-widest transition-all duration-300",
                 isActive
                   ? "bg-blue-600 text-white shadow-lg shadow-blue-200"
                   : "text-slate-500 hover:bg-blue-50 hover:text-blue-600",
@@ -86,10 +86,10 @@ export function Sidebar({ isOpen, onClose }) {
               </div>
             </div>
             <div className="min-w-0">
-              <p className="text-[10px] font-bold uppercase text-slate-900">
+              <p className="text-[12px] font-semibold uppercase text-slate-900">
                 {admin?.name || "Administrator"}
               </p>
-              <span className="text-[8px] font-bold text-blue-600 bg-blue-100/50 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold text-blue-600 bg-blue-100/50 px-2 py-0.5 rounded-full">
                 {admin?.role?.replace("_", " ")}
               </span>
             </div>
@@ -99,7 +99,7 @@ export function Sidebar({ isOpen, onClose }) {
         {/* Log Out */}
         <button
           onClick={() => signOut({ callbackUrl: "/admin/login" })}
-          className="flex items-center justify-center gap-2 w-full py-3 text-slate-400 hover:text-red-500 font-bold uppercase text-[10px] tracking-widest transition-all"
+          className="flex items-center justify-center gap-2 w-full py-3 text-slate-400 hover:text-red-500 font-bold uppercase text-[12px] tracking-widest transition-all"
         >
           <LogOut size={14} />
           Sign Out

@@ -10,12 +10,16 @@ import {
   MessageCircle,
   Eye,
   Loader2,
+  Calendar, // Added for date
+  Phone, // Added for WhatsApp
+  Info, // Added for Admin Notes
+  Users, // Added for Contact Person
+  PackageSearch, // Added for Inventory
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import CreateSupplierModal from "./CreateSupplierModal";
 import { adminFetch } from "@/lib/client-api";
-
 
 const CACHE_TTL = 60 * 1000;
 
@@ -35,7 +39,6 @@ export function SupplierLeadsInbox() {
     counts: { PENDING: 0, VERIFIED: 0, REJECTED: 0 },
   });
 
-  
   const fetchLeads = useCallback(
     async (status, page, forceRefresh = false) => {
       const now = Date.now();
@@ -53,7 +56,6 @@ export function SupplierLeadsInbox() {
         );
         const result = await res.json();
 
-        
         if (res.ok) {
           setCache((prev) => ({
             ...prev,
@@ -94,7 +96,7 @@ export function SupplierLeadsInbox() {
   const totalPages = cache[currentStatus].totalPages || 1;
 
   return (
-    <div className="space-y-6 max-w-[1600px] mx-auto pb-10 px-4">
+    <div className="space-y-6 max-w-[1600px] mx-auto pb-10">
       {/* HEADER SECTION (Remains standard) */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -118,8 +120,8 @@ export function SupplierLeadsInbox() {
             >
               <ChevronLeft size={18} />
             </button>
-            <span className="px-4 text-[12px] font-bold text-slate-600">
-              Page {currentPage} <span className="text-slate-300 mx-1">/</span>{" "}
+            <span className="px-1 text-[12px] font-bold text-slate-600">
+              {currentPage} <span className="text-slate-300">/</span>{" "}
               {totalPages}
             </span>
             <button
@@ -155,7 +157,7 @@ export function SupplierLeadsInbox() {
               setCurrentPage(1);
             }}
             className={cn(
-              "px-6 py-2.5 rounded-xl font-bold text-[11px] tracking-wider transition-all",
+              "px-6 py-2.5 rounded-xl font-bold text-[10px] tracking-wider transition-all",
               currentStatus === s
                 ? "bg-blue-600 text-white shadow-md shadow-blue-100"
                 : "text-slate-500 hover:text-slate-900 hover:bg-slate-50",
@@ -170,85 +172,137 @@ export function SupplierLeadsInbox() {
       <div className="bg-white border border-slate-200 rounded-[1rem] shadow-sm overflow-hidden">
         {/* Horizontal Scroll Area only for the Headers & Existing Data */}
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[1400px]">
-            <thead className="border-b-2 border-slate-200 bg-slate-50/50">
-              <tr>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
-                  Shop
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
-                  WhatsApp
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
-                  Location
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600 text-center">
-                  Condition
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
-                  Submitted
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600">
-                  Admin Notes
-                </th>
-                <th className="px-4 py-4 text-[13px] font-semibold text-slate-600 text-right">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            {activeData.length > 0 && (
-              <tbody className="divide-y-2 divide-slate-100">
-                {activeData.map((lead) => (
-                  <tr
-                    key={lead.id}
-                    className="group hover:bg-slate-50/80 transition-colors"
-                  >
-                    <td className="px-8 py-6 font-black text-slate-900 uppercase italic text-sm">
-                      {lead.shopName}
-                    </td>
-                    <td className="px-8 py-6 text-xs font-bold text-slate-600">
-                      {lead.contactName}
-                    </td>
-                    <td className="px-8 py-6 text-xs font-mono font-bold text-blue-600">
-                      {lead.whatsAppNumber}
-                    </td>
-                    <td className="px-8 py-6 text-center">
-                      <span className="px-3 py-1 border-2 border-slate-900 rounded-lg bg-white text-[9px] font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        {lead.partsCondition}
-                      </span>
-                    </td>
-                    <td className="px-8 py-6 text-[10px] font-bold text-slate-500 uppercase italic">
-                      {new Date(lead.submittedAt).toLocaleDateString()},{" "}
-                      {new Date(lead.submittedAt).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </td>
-                    <td className="px-8 py-6 max-w-[180px] truncate text-[11px] font-medium text-slate-400">
-                      {lead.adminNotes || "—"}
-                    </td>
-                    <td className="px-8 py-6 text-right">
-                      <div className="flex justify-end gap-3">
-                        <button
-                          onClick={() => setSelectedLead(lead)}
-                          className="p-2.5 border-2 border-slate-900 rounded-xl shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]"
-                        >
-                          <Eye size={16} strokeWidth={3} />
-                        </button>
-                        <a
-                          href={`https://wa.me/${lead.whatsAppNumber}`}
-                          target="_blank"
-                          className="p-2.5 border-2 border-green-600 text-green-600 rounded-xl"
-                        >
-                          <MessageCircle size={16} strokeWidth={3} />
-                        </a>
-                      </div>
-                    </td>
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+              {/* table-fixed is now used with a minimum width to prevent collapse on small screens */}
+              <table className="w-full table-fixed text-left border-collapse md:min-w-[1300px]">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50/50">
+                    {/* 1. Main Column - Very Wide */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[200px]">
+                      Shop & Owner
+                    </th>
+
+                    {/* 2. WhatsApp - Fixed Width */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[150px]">
+                      WhatsApp
+                    </th>
+
+                    {/* 3. Location - Flexible */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[150px]">
+                      Location
+                    </th>
+
+                    {/* 4. Condition - Fixed Width */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[100px]">
+                      Condition
+                    </th>
+
+                    {/* 5. Submitted - Date needs space */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[100px]">
+                      Submitted
+                    </th>
+
+                    {/* 6. Admin Notes - Flexible */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500 w-[200px]">
+                      Admin Notes
+                    </th>
+
+                    {/* 7. Actions - Fixed */}
+                    <th className="px-6 py-4 text-[12px] font-bold  tracking-wider text-slate-500  w-[100px]">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
+                </thead>
+
+                {activeData.length > 0 && (
+                  <tbody className="divide-y divide-slate-100">
+                    {activeData.map((lead) => (
+                      <tr
+                        key={lead.id}
+                        className="group hover:bg-slate-50/80 transition-colors"
+                      >
+                        {/* 1. Shop & Owner */}
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col min-w-0">
+                            <span className="text-sm font-bold text-slate-900 leading-tight mb-1 capitalize truncate">
+                              {lead.shopName}
+                            </span>
+                            <span className="text-xs text-slate-500 truncate">
+                              {lead.contactName}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* 2. WhatsApp */}
+                        <td className="px-6 py-5">
+                          <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-lg">
+                            {lead.whatsAppNumber}
+                          </span>
+                        </td>
+
+                        {/* 3. Location */}
+                        <td className="px-6 py-5">
+                          <p className="text-xs font-semibold text-slate-600 truncate">
+                            {lead.locationText}
+                          </p>
+                        </td>
+
+                        {/* 4. Condition */}
+                        <td className="px-6 py-5">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 text-white text-[9px] font-black uppercase tracking-tighter">
+                            {lead.partsCondition}
+                          </span>
+                        </td>
+
+                        {/* 5. Submitted */}
+                        <td className="px-6 py-5">
+                          <div className="flex flex-col text-[11px] font-bold text-slate-500 uppercase tracking-tight">
+                            <span>
+                              {new Date(lead.submittedAt).toLocaleDateString(
+                                "en-GB",
+                              )}
+                            </span>
+                            <span className="text-slate-400 font-medium italic">
+                              {new Date(lead.submittedAt).toLocaleTimeString(
+                                [],
+                                { hour: "2-digit", minute: "2-digit" },
+                              )}
+                            </span>
+                          </div>
+                        </td>
+
+                        {/* 6. Admin Notes */}
+                        <td className="px-6 py-5">
+                          <p className="truncate text-[11px] font-medium text-slate-400 italic">
+                            {lead.adminNotes || "—"}
+                          </p>
+                        </td>
+
+                        {/* 7. Actions */}
+                        <td className="px-6 py-5 ">
+                          <div className="flex justify-end items-center gap-2">
+                            <button
+                              onClick={() => setSelectedLead(lead)}
+                              className="p-2 text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-slate-900 hover:text-slate-900 transition-all"
+                            >
+                              <Eye size={16} strokeWidth={2} />
+                            </button>
+                            <a
+                              href={`https://wa.me/${lead.whatsAppNumber}`}
+                              className="p-2 text-green-600 bg-green-50 border border-green-200 rounded-lg hover:bg-green-600 hover:text-white transition-all"
+                            >
+                              <MessageCircle size={16} strokeWidth={2} />
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
+              </table>
+            </div>
+          </div>
         </div>
 
         {/* CENTERED STATES OUTSIDE HORIZONTAL SCROLL */}
@@ -326,7 +380,13 @@ export function SupplierLeadsInbox() {
 // ... LeadDetailsModal component (Remains same with setCache for instant sync) ...
 
 // --- 3. UPDATED MODAL (Instant Notes Sync) ---
-function LeadDetailsModal({ lead, onClose, onUpdate, setCache, onCreateAccount }) {
+function LeadDetailsModal({
+  lead,
+  onClose,
+  onUpdate,
+  setCache,
+  onCreateAccount,
+}) {
   const [notes, setNotes] = useState(lead.adminNotes || "");
   const [saveStatus, setSaveStatus] = useState("idle");
   const timerRef = useRef(null);
@@ -382,117 +442,153 @@ function LeadDetailsModal({ lead, onClose, onUpdate, setCache, onCreateAccount }
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-slate-900/50 backdrop-blur-md animate-in fade-in">
-      <div className="bg-white border-2 border-slate-900 rounded-[2.5rem] w-full max-w-2xl shadow-[24px_24px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-        <div className="p-10 space-y-8">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300">
+      <div className="bg-white border border-slate-200 rounded-[2.5rem] w-full max-w-2xl shadow-2xl shadow-slate-900/20 overflow-hidden ring-1 ring-black/5">
+        <div className="p-8 lg:p-12 space-y-10">
+          {/* 1. ELEGANT HEADER */}
           <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-3xl font-black italic uppercase tracking-tighter text-slate-900 leading-none">
+            <div className="space-y-1">
+              <h3 className="text-xl font-semibold tracking-tight text-slate-900">
                 {lead.shopName}
               </h3>
-              <p className="text-[10px] font-black uppercase text-slate-400 mt-2 tracking-widest">
-                {lead.status} Lead Details
-              </p>
+              <div className="flex items-center gap-2">
+                <span
+                  className={cn(
+                    "w-2 h-2 rounded-full",
+                    lead.status === "PENDING"
+                      ? "bg-amber-400"
+                      : lead.status === "VERIFIED"
+                        ? "bg-blue-500"
+                        : "bg-slate-300",
+                  )}
+                />
+                <p className="text-[11px] font-semibold  uppercase text-slate-400 tracking-widest">
+                  {lead.status.replace("_", " ")} Lead Profile
+                </p>
+              </div>
             </div>
             <button
               onClick={onClose}
-              className="p-2 border-2 border-slate-900 rounded-xl hover:bg-slate-50 transition-colors"
+              className="p-2.5 text-slate-400 hover:text-slate-900 hover:bg-slate-50 rounded-2xl transition-all border border-transparent hover:border-slate-100"
             >
-              <X size={20} strokeWidth={3} />
+              <X size={20} strokeWidth={2.5} />
             </button>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-12 gap-y-6 bg-slate-50 border-2 border-slate-900 rounded-[1.5rem] p-8">
+          {/* 2. INFORMATION GRID (Refined Card) */}
+          <div className="grid grid-cols-2 gap-x-10 gap-y-8 bg-slate-50/50 border border-slate-100 rounded-[2rem] px-8 py-5 lg:p-10">
             {[
-              { label: "Contact Person", value: lead.contactName },
-              { label: "WhatsApp Contact", value: `+${lead.whatsAppNumber}` },
-              { label: "Parts Condition", value: lead.partsCondition },
+              { label: "Contact Person", value: lead.contactName, icon: Users },
               {
-                label: "Submitted On",
-                value: new Date(lead.submittedAt).toLocaleString("en-IN"),
+                label: "WhatsApp",
+                value: `+${lead.whatsAppNumber}`,
+                icon: Phone,
+              },
+              {
+                label: "Location",
+                value: lead.locationText,
+              },
+              {
+                label: "Inventory Type",
+                value: lead.partsCondition,
+                icon: PackageSearch,
+              },
+              {
+                label: "Recorded On",
+                value: new Date(lead.submittedAt).toLocaleDateString("en-IN", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                }),
+                icon: Calendar,
               },
             ].map((i) => (
-              <div key={i.label}>
-                <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest">
+              <div key={i.label} className="space-y-1.5">
+                <p className="text-[12px] font-semibold text-slate-500 tracking-wide flex items-center gap-2">
                   {i.label}
                 </p>
-                <p className="text-[13px] font-bold text-slate-800 mt-1">
+                <p className="text-[13px] font-semibold text-slate-700">
                   {i.value}
                 </p>
               </div>
             ))}
           </div>
 
+          {/* 3. CONTACT ACTION */}
           <a
             href={`https://wa.me/${lead.whatsAppNumber}`}
             target="_blank"
-            className="w-full flex items-center justify-center gap-2 py-3 border-2 border-green-600 text-green-600 rounded-xl font-black italic uppercase text-[11px] shadow-[4px_4px_0px_0px_rgba(22,163,74,0.1)]"
+            className="w-full flex items-center justify-center gap-3 py-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/50 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all active:scale-[0.98]"
           >
-            <MessageCircle size={16} strokeWidth={3} /> Contact on WhatsApp
+            <MessageCircle size={18} strokeWidth={2.5} /> Open WhatsApp Chat
           </a>
 
-          <div className="space-y-3">
-            <div className="flex justify-between items-center text-[10px] font-black uppercase text-slate-400 tracking-widest">
-              <label>Administrator Context Notes</label>
+          {/* 4. CONTEXT NOTES (Sleek Textarea) */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center px-1">
+              <label className="text-[13px] font-semibold text-slate-700 flex items-center gap-2">
+                <Info size={14} className="text-blue-500" /> Administrative
+                Context
+              </label>
               <span
                 className={cn(
-                  "px-2 py-0.5 rounded-md border text-[9px]",
+                  "px-2.5 py-1 rounded-full text-[11px] font-semibold capitalize  border",
                   saveStatus === "saved"
-                    ? "text-green-600"
-                    : "text-blue-600 animate-pulse",
+                    ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                    : "bg-blue-50 text-blue-600 border-blue-100 animate-pulse",
                 )}
               >
-                {saveStatus.toUpperCase()}
+                {saveStatus}
               </span>
             </div>
             <textarea
               value={notes}
               onChange={handleNotesChange}
-              className="w-full h-32 p-5 bg-slate-50 border-2 border-slate-900 rounded-[1.2rem] font-bold text-xs focus:bg-white outline-none resize-none transition-all shadow-inner"
-              placeholder="Start typing context for this supplier..."
+              className="w-full h-28 p-4 bg-white border border-slate-200 rounded-[1.5rem] font-medium text-[13px] text-slate-600 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/5 outline-none resize-none transition-all shadow-sm placeholder:text-slate-300"
+              placeholder="Add internal notes about this supplier..."
             />
           </div>
 
-          <div className="flex gap-4">
+          {/* 5. ACTION FOOTER (Dynamic Colors) */}
+          <div className="flex gap-4 pt-2">
             {lead.status === "PENDING" && (
               <>
                 <button
                   onClick={() => handleAction("VERIFIED")}
-                  className="flex-1 py-4 bg-green-500 text-white border-2 border-slate-900 rounded-2xl font-black italic uppercase text-[11px] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none transition-all"
+                  className="flex-1 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-[1.25rem] font-bold text-xs uppercase tracking-widest shadow-lg shadow-blue-200 transition-all active:scale-95"
                 >
-                  Verify Supplier
+                  Approve Lead
                 </button>
                 <button
                   onClick={() => handleAction("REJECTED")}
-                  className="flex-1 py-4 bg-red-50 text-red-600 border-2 border-red-200 rounded-2xl font-black italic uppercase text-[11px] hover:bg-red-500 hover:text-white transition-all"
+                  className="flex-1 py-4 bg-white hover:bg-rose-50 text-rose-600 border border-slate-200 hover:border-rose-200 rounded-[1.25rem] font-bold text-xs uppercase tracking-widest transition-all"
                 >
-                  Reject Lead
+                  Reject
                 </button>
               </>
             )}
             {lead.status === "VERIFIED" && (
               <>
-                {/* Trigger the secondary modal flow */}
                 <button
                   onClick={onCreateAccount}
-                  className="flex-1 py-4 bg-blue-600 text-white border-2 border-slate-900 rounded-2xl font-black italic uppercase text-[11px] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+                  className="flex-1 py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-[1.25rem] font-bold text-xs uppercase tracking-widest shadow-lg shadow-indigo-100 transition-all"
                 >
                   Create Account
                 </button>
                 <button
                   onClick={() => handleAction("PENDING")}
-                  className="px-10 py-4 border-2 border-slate-200 text-slate-400 rounded-2xl font-black italic uppercase text-[11px] hover:border-slate-900"
+                  className="px-8 py-4 text-slate-400 hover:text-slate-600 font-bold text-xs uppercase tracking-widest transition-colors"
                 >
-                  Revert
+                  Move back
                 </button>
               </>
             )}
             {lead.status === "REJECTED" && (
               <button
                 onClick={() => handleAction("PENDING")}
-                className="flex-1 py-4 border-2 border-slate-900 rounded-2xl font-black italic uppercase text-[11px] hover:bg-slate-900 hover:text-white transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:translate-y-1 active:shadow-none"
+                className="flex-1 py-4 bg-white hover:bg-slate-50 text-slate-900 border border-slate-900 rounded-[1.25rem] font-bold text-xs uppercase tracking-widest transition-all"
               >
-                Revert to Pending
+                Restore to Pending
               </button>
             )}
           </div>

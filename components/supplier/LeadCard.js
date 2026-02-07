@@ -81,11 +81,11 @@ export function LeadCard({ lead, variant = "all" }) {
           </p>
           <p className="text-[12px] mt-2 font-semibold text-slate-400">
             Condition:{" "}
-            <span className="text-[10px] text-slate-600">{lead.condition}</span>
+            <span className="text-[12px] text-slate-600">{lead.condition}</span>
           </p>
           <div className="flex items-center gap-1 mt-1">
             <MapPin size={14} className="text-red-500" />
-            <span className="text-xs font-semibold text-slate-600">
+            <span className="text-[12px] font-semibold text-slate-600">
               {lead.locationText}
             </span>
           </div>
@@ -107,7 +107,7 @@ export function LeadCard({ lead, variant = "all" }) {
               #{lead.id.slice(-8)}
             </span>
           </p>
-          <p className="text-[10px] font-semibold text-slate-400 uppercase">
+          <p className="text-[11px] font-semibold text-slate-400 uppercase">
             {format(new Date(lead.createdAt), "dd MMM • hh:mm a")}
           </p>
         </div>
