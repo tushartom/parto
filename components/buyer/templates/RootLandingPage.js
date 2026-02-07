@@ -2,7 +2,7 @@
 import React from "react";
 import { LeadForm } from "@/components/buyer/LeadForm";
 import TrustMetrics from "../brand/TrustMetrics";
-import { HowItWorks } from "@/components/buyer/brand/HowItWorks";
+import HowItWorks from "../brand/HowItWorks";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import Image from "next/image"; // ... inside your component
@@ -12,7 +12,7 @@ import { BrandGrid } from "../BrandGrid";
 import { getActiveInventory } from "@/lib/inventory";
 import { getCities } from "@/lib/inventory";
 import { CityGrid } from "../CityGrid";
-
+import FaqSection from "../brand/FaqSection";
 export default async function RootLandingPage() {
   const { brands, partsWithCategoryName } = await getActiveInventory();
   // console.log(partsWithCategoryName);
@@ -76,6 +76,7 @@ export default async function RootLandingPage() {
       <CityGrid cities={cities} />
       <TrustMetrics />
       <PartoGuarantee />
+      <FaqSection />
     </main>
   );
 }

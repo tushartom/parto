@@ -120,13 +120,8 @@ export function LeadForm({
 
 
   return (
-    <div className="w-full max-w-2xl bg-white border-2 border-slate-900 rounded-[2.5rem] shadow-[12px_12px_0px_0px_rgba(37,99,235,1)] overflow-hidden transition-all duration-500">
-      <div className="h-4 bg-slate-100 flex border-b-2 border-slate-900">
-        <div
-          className="bg-blue-600 transition-all duration-700 border-r-2 border-slate-900"
-          style={{ width: step === 1 ? "50%" : "100%" }}
-        />
-      </div>
+    <div className="w-full max-w-2xl bg-white border-2 border-slate-900 rounded-[2.5rem] shadow-[12px_12px_0px_0px_rgba(37,99,235,1)]  transition-all duration-500">
+      
 
       <form onSubmit={handleSubmit(onSubmit)} className="p-8 md:p-12 text-left">
         {step === 1 ? (
@@ -135,7 +130,7 @@ export function LeadForm({
               <h2 className="md:text-4xl text-3xl font-semibold text-center   tracking-tight leading-none">
                 Find Your <span className="text-blue-600">Part</span>
               </h2>
-              <p className="text-slate-400 text-center font-bold text-[11px] md:text-[14px]  mt-2 uppercase tracking-[0.1em]">
+              <p className="text-slate-500 text-center font-bold text-[13px] md:text-[14px]  mt-2 uppercase tracking-[0.1em]">
                 100% FREE
               </p>
             </header>
@@ -192,8 +187,6 @@ export function LeadForm({
             {/* EXPANDABLE SECTION (Revealed only after Year is filled) */}
             {showExtendedForm && (
               <div className="space-y-8 animate-in slide-in-from-top-4 fade-in duration-500">
-                <div className="h-px bg-slate-100 w-full" />
-
                 <div className="space-y-2">
                   <FormLabel label="Part Condition" error={errors.condition} />
                   <div className="grid grid-cols-3 gap-2">
@@ -207,12 +200,12 @@ export function LeadForm({
                             opt === "Any" ? "Doesn't matter" : opt,
                           )
                         }
-                        className={`md:py-4 py-2.5 rounded-xl border-2 font-black uppercase text-[10px] tracking-widest transition-all ${
+                        className={`md:py-4 py-2.5 rounded-xl border-2 font-bold  text-[12px] tracking-wide transition-all ${
                           selectedCondition === opt ||
                           (opt === "Any" &&
                             selectedCondition === "Doesn't matter")
-                            ? "bg-slate-900 text-white border-slate-900 shadow-[4px_4px_0px_0px_rgba(37,99,235,1)]"
-                            : "bg-white text-slate-400 border-slate-100 hover:border-slate-900 hover:text-slate-900"
+                            ? "bg-slate-900 text-white border-slate-900"
+                            : "bg-white text-slate-500 border-slate-100 hover:border-slate-900 hover:text-slate-900"
                         }`}
                       >
                         {opt}
@@ -222,7 +215,7 @@ export function LeadForm({
                 </div>
 
                 <div className="space-y-2 relative">
-                  <FormLabel label="Search & Add Parts" error={errors.parts} />
+                  <FormLabel label="Parts Required" error={errors.parts} />
                   <div className="relative">
                     <Search className="absolute left-5 top-1/2 -translate-y-1/2 md:w-5 md:h-5 w-4 h-4 text-slate-400" />
                     <input
@@ -234,10 +227,10 @@ export function LeadForm({
                       }}
                       onFocus={() => setIsDropdownOpen(true)}
                       placeholder="Type part name..."
-                      className="w-full pl-14 md:p-5 py-2 md:rounded-2xl rounded-xl border-2 text-[13px] md:text-[15px] border-slate-100 focus:border-slate-900 outline-none font-bold bg-slate-50 transition-all"
+                      className="w-full pl-14 md:p-5 py-2 md:rounded-2xl rounded-xl border-2 text-[13px] md:text-[15px] border-slate-100 focus:border-slate-700 outline-none font-semibold bg-slate-50 transition-all"
                     />
                     {isDropdownOpen && searchTerm.length > 0 && (
-                      <div className="absolute z-50 w-full mt-2 bg-white border-2 border-slate-900 rounded-2xl shadow-2xl max-h-64 overflow-y-auto">
+                      <div className="absolute z-100 w-full mt-2 bg-white border-2 border-slate-700 rounded-2xl shadow-2xl max-h-64 overflow-y-auto ">
                         {filteredParts.map((part) => (
                           <button
                             key={part.id}
@@ -247,11 +240,11 @@ export function LeadForm({
                               setSearchTerm("");
                               setIsDropdownOpen(false);
                             }}
-                            className="w-full text-left px-6 py-4 font-bold uppercase text-xs hover:bg-blue-50 hover:text-blue-600 border-b-2 border-slate-50 last:border-0 transition-colors"
+                            className="w-full text-left px-6 py-3 flex justify-between items-center font-semibold uppercase text-xs tracking-wide hover:bg-blue-50 hover:text-blue-600 border-b-2 border-slate-50 last:border-0 transition-colors"
                           >
-                            + {part.name}{" "}
-                            <span className="italic font-medium">
-                              ({part.categoryName})
+                            <span>+ {part.name} </span>
+                            <span className="font-medium capitalize text-[11px] bg-blue-400 text-white px-1.5 py-1 rounded-[10px] ">
+                              {part.categoryName}
                             </span>
                           </button>
                         ))}
@@ -262,11 +255,11 @@ export function LeadForm({
 
                 {/* Selected Parts Badges */}
                 {selectedParts.length > 0 && (
-                  <div className="flex flex-wrap gap-2 p-5 bg-slate-50 rounded-[1.5rem] border-2 border-dashed border-slate-200">
+                  <div className="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-[1.5rem] border-2 border-dashed border-slate-200">
                     {selectedParts.map((part) => (
                       <span
                         key={part}
-                        className="flex items-center gap-3 bg-slate-900 text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest border-2 border-slate-900"
+                        className="flex items-center gap-3 bg-slate-900 text-white px-3 py-2 rounded-full text-[11px] font-semibold uppercase tracking-wider border-2 border-slate-900"
                       >
                         {part}
                         <X
@@ -286,7 +279,7 @@ export function LeadForm({
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="w-full bg-slate-900 text-white md:py-6 py-3 md:rounded-2xl rounded-xl  font-black italic uppercase md:text-xl text-[15px] flex items-center justify-center group hover:bg-blue-600 transition-all shadow-[8px_8px_0px_0px_rgba(37,99,235,1)] active:translate-y-1 active:shadow-none"
+                  className="w-full bg-slate-900 text-white md:py-6 py-3 md:rounded-2xl rounded-xl  font-semibold italic uppercase md:text-xl text-[15px] flex items-center justify-center group hover:bg-blue-600 transition-all shadow-[8px_8px_0px_0px_rgba(37,99,235,1)] active:translate-y-1 active:shadow-none"
                 >
                   Contact Details{" "}
                   <ChevronRight className="ml-2 group-hover:translate-x-2 transition-transform" />
@@ -297,10 +290,10 @@ export function LeadForm({
         ) : (
           <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
             <header>
-              <h2 className="md:text-5xl text-3xl font-black italic uppercase tracking-tighter leading-none">
+              <h2 className="md:text-5xl text-3xl text-center font-black capitalize  leading-none">
                 Almost <span className="text-blue-600">Done!</span>
               </h2>
-              <p className="text-slate-400 font-bold text-[10px] mt-3 uppercase tracking-[0.2em]">
+              <p className="text-slate-500 font-semibold text-center text-[12px] mt-2 capitalize tracking-wide">
                 Sellers will send you prices on WhatsApp.
               </p>
             </header>
@@ -309,11 +302,11 @@ export function LeadForm({
               <div className="space-y-2">
                 <FormLabel label="Your Location" error={errors.location} />
                 <div className="relative">
-                  <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                  <MapPin className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <input
                     {...register("location")}
                     placeholder="Enter City Name"
-                    className="w-full pl-14 md:p-5 py-2.5 md:rounded-2xl rounded-xl border-2 border-slate-100 focus:border-slate-900 outline-none font-bold bg-slate-50"
+                    className="w-full pl-14 md:p-5 py-2.5 md:rounded-2xl rounded-xl border-2 border-slate-100 focus:border-slate-900 outline-none font-medium text-[14px] bg-slate-50"
                   />
                 </div>
               </div>
@@ -321,14 +314,14 @@ export function LeadForm({
               <div className="space-y-2">
                 <FormLabel label="WhatsApp Number" error={errors.phone} />
                 <div className="relative flex">
-                  <span className="flex items-center px-6 bg-slate-100 border-2 border-r-0 border-slate-100 rounded-l-2xl font-black text-slate-400">
+                  <span className="flex items-center px-6 bg-slate-100 border-2 border-r-0 border-slate-100 rounded-l-2xl font-semibold text-slate-400">
                     +91
                   </span>
                   <input
                     {...register("phone")}
                     type="tel"
                     placeholder="99999XXXXX"
-                    className="w-full md:p-5 py-2.5 rounded-r-2xl border-2 border-slate-100 focus:border-slate-900 outline-none font-black tracking-widest bg-slate-50"
+                    className="w-full md:p-5 py-2.5 pl-2 rounded-r-2xl text-[14px] border-2 border-slate-100 focus:border-slate-900 outline-none font-medium tracking-wide bg-slate-50"
                   />
                 </div>
               </div>
@@ -345,7 +338,7 @@ export function LeadForm({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="col-span-3 bg-blue-600 text-white md:py-6 py-2 rounded-2xl font-black italic uppercase text-[14px] md:text-xl flex items-center justify-center hover:bg-slate-900 transition-all shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] disabled:opacity-50"
+                className="col-span-3 bg-blue-600 text-white md:py-6 py-2 rounded-2xl font-semibold  uppercase text-[14px] md:text-xl flex items-center justify-center hover:bg-slate-900 transition-all shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <Loader2 className="animate-spin" />
@@ -365,7 +358,7 @@ export function LeadForm({
 function FormLabel({ label, error }) {
   return (
     <div className="flex justify-between items-center mb-1">
-      <label className="text-[11px] md:text-[12px] font-semibold tracking-[0.1em] text-slate-500">
+      <label className="text-[13px] md:text-[14px] font-semibold tracking-wide text-slate-500">
         {label}
       </label>
       {error && (
