@@ -132,11 +132,11 @@ export function LeadForm({
         {step === 1 ? (
           <div className="space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
             <header>
-              <h2 className="md:text-5xl text-3xl font-bold text-center italic uppercase tracking-tighter leading-none">
-                Check part <span className="text-blue-600">Price</span>
+              <h2 className="md:text-4xl text-3xl font-semibold text-center   tracking-tight leading-none">
+                Find Your <span className="text-blue-600">Part</span>
               </h2>
-              <p className="text-slate-400 text-center font-bold text-[10px] md:mt-3 mt-2 uppercase tracking-[0.2em]">
-                Step 01: Vehicle & Part Details
+              <p className="text-slate-400 text-center font-bold text-[11px] md:text-[14px]  mt-2 uppercase tracking-[0.1em]">
+                100% FREE
               </p>
             </header>
 
@@ -365,7 +365,7 @@ export function LeadForm({
 function FormLabel({ label, error }) {
   return (
     <div className="flex justify-between items-center mb-1">
-      <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
+      <label className="text-[11px] md:text-[12px] font-semibold tracking-[0.1em] text-slate-500">
         {label}
       </label>
       {error && (
