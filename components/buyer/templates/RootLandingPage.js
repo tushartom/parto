@@ -13,8 +13,36 @@ import { getActiveInventory } from "@/lib/inventory";
 import { getCities } from "@/lib/inventory";
 import { CityGrid } from "../CityGrid";
 import FaqSection from "../brand/FaqSection";
+import { PartAdsSection } from "../PartAdsSection";
+
+async function getAllAds() {
+  return await prisma.partAd.findMany({
+    where: {
+      status: "ACTIVE",
+      deletedAt: null,
+    },
+    include: {
+      supplier: {
+        select: {
+          shopName: true,
+          city: true,
+          state: true,
+          whatsAppNumber: true,
+        },
+      },
+      brand: true,
+      model: true,
+      category: true,
+    },
+    orderBy: {
+      createdAt: "desc", // Show newest first
+    },
+    take: 10, // Only fetch the first 20 for initial load
+  });
+}
 export default async function RootLandingPage() {
   const { brands, partsWithCategoryName } = await getActiveInventory();
+  const ads = await getAllAds();
   // console.log(partsWithCategoryName);
   const cities = await getCities();
 
@@ -24,17 +52,17 @@ export default async function RootLandingPage() {
 
       <section className="relative pt-24 pb-18 overflow-hidden bg-slate-50 border-b-2 border-slate-100">
         <div className="max-w-7xl mx-auto px-4 relative z-10 text-center">
-
           {/* 2. MAIN HEADLINE */}
           <h1 className="md:text-4xl text-[24px] max-w-[900px] text-center mx-auto font-semibold tracking-tight  leading-[1.2] md:leading-[1.2] mb-8 text-slate-900">
-            Car <span className="text-blue-600">Spare Parts</span> Online in India, <br></br> Get{" "}
-            <span className="text-blue-600">Prices</span> for Second Hand & New
-            Parts Now
+            Car <span className="text-blue-600">Spare Parts</span> Online in
+            India, <br></br> Get <span className="text-blue-600">Prices</span>{" "}
+            for Second Hand & New Parts Now
           </h1>
 
           {/* 3. SUBTEXT */}
           <p className="max-w-[340px] mx-auto text-slate-500 mb-10">
-            Connecting you with verified sellers for new and used car parts across India.
+            Connecting you with verified sellers for new and used car parts
+            across India.
           </p>
 
           {/* 4. RESPONSIVE HERO IMAGE */}
@@ -42,7 +70,7 @@ export default async function RootLandingPage() {
             {/* <div className="absolute inset-0 bg-blue-500/10 blur-[80px] rounded-full -z-10" />{" "} */}
             {/* Subtle glow effect */}
             <Image
-              src="/hero-image1.png" 
+              src="/hero-image1.png"
               alt="Parto Spare Parts Diagram"
               width={750}
               height={600}
@@ -72,6 +100,7 @@ export default async function RootLandingPage() {
         </div>
       </section>
       <HowItWorks />
+      <PartAdsSection initialAds={ads} />
       <BrandGrid brands={brands} />
       <CityGrid cities={cities} />
       <TrustMetrics />

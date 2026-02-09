@@ -12,9 +12,9 @@ export function BrandGrid({ brands = [], citySlug = "delhi" }) {
   console.log(brands);
   return (
     <section className="  bg-slate-50">
-      <div className="py-22 md:py-24 max-w-[1080px] mx-auto px-4">
-        <h2 className="text-4xl font-black italic uppercase tracking-tighter text-slate-900 text-center leading-none mb-12">
-          Shop by <span className="text-blue-600">Brand</span>
+      <div className="py-20 md:py-24 max-w-[1080px] mx-auto px-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-12">
+          Shop by <span className="text-blue-600">Brands</span>
         </h2>
 
         {/* The Grid */}
@@ -28,7 +28,7 @@ export function BrandGrid({ brands = [], citySlug = "delhi" }) {
               <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center mb-4 group-hover:bg-blue-600  transition-all duration-300">
                 <Car className="w-6 h-6 text-slate-400 group-hover:text-white transition-colors" />
               </div>
-              <span className="font-black uppercase italic text-sm tracking-tighter text-slate-600 group-hover:text-slate-900">
+              <span className="font-bold  text-sm  text-slate-600 group-hover:text-slate-900">
                 {brand.name}
               </span>
             </Link>
@@ -42,7 +42,7 @@ export function BrandGrid({ brands = [], citySlug = "delhi" }) {
               onClick={() => setIsExpanded(!isExpanded)}
               className="group flex items-center gap-2 py-2 px-6 border-2 border-slate-900 rounded-full transition-all hover:bg-slate-900 hover:text-white active:scale-95 shadow-[4px_4px_0px_0px_rgba(37,99,235,1)] hover:shadow-none"
             >
-              <span className="font-black uppercase italic text-[11px] tracking-widest">
+              <span className="font-bold uppercase  text-[13px] tracking-wide">
                 {isExpanded ? "Show Less" : "See All Brands"}
               </span>
               {isExpanded ? (

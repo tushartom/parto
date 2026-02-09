@@ -23,7 +23,7 @@ const currentSupplierId = supplier.id;
 
     const existingAd = await prisma.partAd.findUnique({
       where: { id: adId },
-      select: { supplierId: true },
+      select: { supplierId: true, slug: true },
     });
 
     if (!existingAd || existingAd.supplierId !== currentSupplierId) {
@@ -92,7 +92,7 @@ revalidatePath("/supplier/my-ads");
 
     // revalidatePath("/supplier/my-ads");
     revalidatePath(`/ad/${existingAd.slug}`); // Update the specific ad page
-
+revalidatePath("/");
     return { success: true };
   } catch (error) {
     console.error("UPDATE_AD_ERROR:", error);

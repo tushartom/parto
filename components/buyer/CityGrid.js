@@ -12,8 +12,8 @@ export function CityGrid({ cities = [] }) {
 
   return (
     <section className=" bg-slate-950 text-white  border-2 border-slate-900 shadow-2xl">
-      <div className="py-22 md:py-24 max-w-[1080px] mx-auto px-4 ">
-        <h2 className="text-4xl font-black italic uppercase tracking-tighter text-center leading-none mb-12">
+      <div className="py-20 md:py-24 max-w-[1080px] mx-auto px-4 ">
+        <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-12">
           Top <span className="text-blue-600">Markets</span>
         </h2>
 
@@ -29,7 +29,7 @@ export function CityGrid({ cities = [] }) {
                 <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-blue-600 transition-colors duration-300">
                   <MapPin className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors" />
                 </div>
-                <span className="font-black uppercase italic tracking-widest text-xs">
+                <span className="font-semibold uppercase tracking-widest text-xs">
                   {city.name}
                 </span>
               </div>
@@ -45,7 +45,7 @@ export function CityGrid({ cities = [] }) {
               onClick={() => setIsExpanded(!isExpanded)}
               className="group flex items-center gap-3 py-4 px-10 border-2 border-white/10 rounded-full transition-all hover:border-blue-600 hover:bg-blue-600 active:scale-95"
             >
-              <span className="font-black uppercase italic text-xs tracking-[0.2em]">
+              <span className="font-bold uppercase  text-xs tracking-[0.1em]">
                 {isExpanded ? "Show less" : `See All Cities`}
               </span>
               {isExpanded ? (

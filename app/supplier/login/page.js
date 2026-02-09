@@ -163,7 +163,7 @@ const appVerifier = window.recaptchaVerifier;
           <h1 className="text-4xl font-bold  uppercase tracking-tighter leading-none">
             PAR<span className="text-blue-600 ">TO</span>
           </h1>
-          <p className="text-[12px] font-bold uppercase text-slate-400 tracking-[0.1em] mt-1">
+          <p className="text-[12px] font-bold uppercase text-slate-500 tracking-[0.1em] mt-1">
             Supplier Portal
           </p>
         </header>
@@ -215,7 +215,7 @@ const appVerifier = window.recaptchaVerifier;
             </button>
             {/* Registration Link */}
             <div className="mt-4 text-center ">
-              <p className="text-[12px] font-medium text-slate-400 tracking-wide">
+              <p className="text-[12px] font-medium text-slate-500 tracking-wide">
                 New to the network?
               </p>
               <Link
@@ -238,7 +238,7 @@ const appVerifier = window.recaptchaVerifier;
               </p>
             </div>
             <input
-              type="text"
+              type="tel"
               placeholder="0 0 0 0 0 0"
               value={otp}
               onChange={(e) =>

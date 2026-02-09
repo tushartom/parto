@@ -83,19 +83,19 @@ export default function SupplierRegistration() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 pb-24">
-      <div className="w-full max-w-xl bg-white border-4 border-slate-900 rounded-[3rem] shadow-[15px_15px_0px_0px_rgba(15,23,42,1)] overflow-hidden">
+      <div className="w-full max-w-xl bg-white   rounded-[2rem] shadow-[12px_12px_0px_0px_rgba(37,99,235,1)] overflow-hidden">
         <header className="bg-slate-900 p-8 text-white">
-          <h1 className="text-4xl font-black italic uppercase tracking-tighter leading-none">
+          <h1 className="text-3xl font-bold italic uppercase tracking-tighter leading-none">
             Become a <span className="text-blue-500">Verified Seller</span>
           </h1>
           <div className="flex justify-between items-center mt-4">
             <p className="text-slate-400 font-bold text-xs uppercase tracking-widest">
-              Join India's premium spare parts network
+              Join Parto spare parts network
             </p>
             {/* Direct path for existing users */}
             <Link
               href="/supplier/login"
-              className="text-blue-400 text-xs font-black uppercase flex items-center gap-1 hover:underline"
+              className="text-blue-400 text-xs font-bold uppercase flex items-center gap-1 hover:underline"
             >
               Already a seller? <LogIn size={14} />
             </Link>
@@ -127,8 +127,8 @@ export default function SupplierRegistration() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                <Store size={12} /> Shop Name
+              <label className="text-[12px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-2">
+                <Store size={14} /> Shop Name
               </label>
               <input
                 {...register("shopName")}
@@ -142,8 +142,8 @@ export default function SupplierRegistration() {
               )}
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                <User size={12} /> Owner Name
+              <label className="text-[12px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-2">
+                <User size={14} /> Owner Name
               </label>
               <input
                 {...register("ownerName")}
@@ -155,7 +155,7 @@ export default function SupplierRegistration() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
+              <label className="text-[12px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-2">
                 WhatsApp Number
               </label>
               <div className="flex">
@@ -175,8 +175,8 @@ export default function SupplierRegistration() {
               )}
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                <MapPin size={12} /> City
+              <label className="text-[12px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-2">
+                <MapPin size={14} /> City
               </label>
               <input
                 {...register("city")}
@@ -187,8 +187,8 @@ export default function SupplierRegistration() {
           </div>
 
           <div className="space-y-4">
-            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-              <PackageCheck size={12} /> Parts You Offer
+            <label className="text-[12px] font-bold uppercase tracking-wide text-slate-500 flex items-center gap-2">
+              <PackageCheck size={14} /> Parts You Offer
             </label>
             <div className="grid grid-cols-3 gap-4">
               {["NEW", "USED", "BOTH"].map((opt) => (
@@ -216,7 +216,7 @@ export default function SupplierRegistration() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-6 rounded-2xl font-black uppercase italic text-xl flex items-center justify-center gap-3 shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] active:translate-y-2 active:shadow-none transition-all disabled:opacity-50"
+            className="w-full bg-blue-600 text-white py-6 rounded-2xl font-black uppercase italic text-xl flex items-center justify-center gap-3  active:translate-y-2 active:shadow-none transition-all disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="animate-spin" />

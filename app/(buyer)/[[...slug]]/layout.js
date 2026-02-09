@@ -44,7 +44,7 @@ function Header() {
               
               <div className="absolute right-0 mt-4 w-72 bg-white border-2 border-slate-900 rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="p-4 flex flex-col gap-2">
-                  <p className="px-4 py-2 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                  <p className="px-4 py-2 text-[13px] font-black uppercase tracking-[0.1em] text-slate-600">
                     Supplier Portal
                   </p>
                   
@@ -56,7 +56,7 @@ function Header() {
                     <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
                       <LogIn className="w-5 h-5 text-blue-600 group-hover:text-white" />
                     </div>
-                    <span className="font-bold uppercase italic text-xs tracking-normal">Login</span>
+                    <span className="font-bold uppercase  text-xs tracking-wide">Login</span>
                   </Link>
 
                   <Link
@@ -67,7 +67,7 @@ function Header() {
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                       <UserPlus className="w-5 h-5" />
                     </div>
-                    <span className="font-bold uppercase italic text-xs tracking-normal">Register</span>
+                    <span className="font-bold uppercase  text-xs tracking-wide">Register</span>
                   </Link>
                 </div>
               </div>
