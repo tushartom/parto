@@ -19,30 +19,30 @@ export default function LeadsPage() {
         <TabsList className="grid w-full grid-cols-3 bg-slate-100/50 p-1.5 rounded-[2rem] h-16 border border-slate-100">
           <TabsTrigger
             value="all"
-            className="rounded-[1.6rem] font-semibold text-[13px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
+            className="rounded-[1.6rem] font-semibold text-[14px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <LayoutGrid size={14} strokeWidth={3} />
+              <LayoutGrid size={14} strokeWidth={2} />
               All
             </div>
           </TabsTrigger>
 
           <TabsTrigger
             value="starred"
-            className="rounded-[1.6rem] font-semibold text-[13px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-yellow-500 data-[state=active]:shadow-sm"
+            className="rounded-[1.6rem] font-semibold text-[14px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-yellow-500 data-[state=active]:shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <Star size={14} strokeWidth={3} />
+              <Star size={14} strokeWidth={2} />
               Starred
             </div>
           </TabsTrigger>
 
           <TabsTrigger
             value="ignored"
-            className="rounded-[1.6rem] font-semibold text-[13px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-red-500 data-[state=active]:shadow-sm"
+            className="rounded-[1.6rem] font-semibold text-[14px] tracking-wide transition-all data-[state=active]:bg-white data-[state=active]:text-red-500 data-[state=active]:shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <Trash2 size={14} strokeWidth={3} />
+              <Trash2 size={14} strokeWidth={2} />
               Ignored
             </div>
           </TabsTrigger>

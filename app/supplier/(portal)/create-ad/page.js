@@ -6,13 +6,13 @@ export default async function CreateAdPage() {
   const { brands, categories } = await getFormMetadata();
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-10">
+    <div className="min-h-screen bg-gray-50 pb-8">
       {/* Mobile-friendly Header */}
-      <div className="bg-white border-b px-4 py-6 mb-6">
+      <div className=" py-2 mb-6">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900">Post a Part</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Fill in the details to list your spare part on the marketplace.
+          <h1 className="text-2xl font-bold text-gray-900 text-center">Create a Part Ad</h1>
+          <p className="text-sm text-gray-500 mt-1 text-center">
+            Fill in the details to list your spare part Ad on the marketplace.
           </p>
         </div>
       </div>

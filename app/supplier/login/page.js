@@ -7,6 +7,7 @@ import { verifySupplierExists } from "./actions";
 import { Loader2, ArrowRight, ShieldCheck, Smartphone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export default function SupplierLoginPage() {
   const { toast } = useToast();
@@ -159,10 +160,10 @@ const appVerifier = window.recaptchaVerifier;
     <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 p-6">
       <div className="max-w-md w-full bg-white border-2 border-slate-900 p-8 md:p-10 rounded-[2.5rem] shadow-[12px_12px_0px_0px_rgba(37,99,235,1)]">
         <header className="mb-10 text-center">
-          <h1 className="text-4xl font-black italic uppercase tracking-tighter leading-none">
-            PAR<span className="text-blue-600">TO</span>
+          <h1 className="text-4xl font-bold  uppercase tracking-tighter leading-none">
+            PAR<span className="text-blue-600 ">TO</span>
           </h1>
-          <p className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mt-2">
+          <p className="text-[12px] font-bold uppercase text-slate-400 tracking-[0.1em] mt-1">
             Supplier Portal
           </p>
         </header>
@@ -170,7 +171,7 @@ const appVerifier = window.recaptchaVerifier;
         {step === "INPUT" ? (
           <div className="space-y-6">
             <div className="relative">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 font-black text-slate-300">
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 font-bold text-slate-400">
                 +91
               </span>
               <input
@@ -180,7 +181,7 @@ const appVerifier = window.recaptchaVerifier;
                 onChange={(e) =>
                   setPhoneNumber(e.target.value.replace(/\D/g, "").slice(0, 10))
                 }
-                className="w-full pl-16 pr-4 py-5 border-2 border-slate-100 rounded-2xl font-semibold text-[15px] outline-none focus:border-blue-600 bg-slate-50/50 transition-all"
+                className="w-full pl-16 pr-4 py-5 border-2 tracking-wide border-slate-100 rounded-2xl font-semibold text-[15px] outline-none focus:border-blue-600 bg-slate-50/50 transition-all"
               />
             </div>
 
@@ -212,11 +213,27 @@ const appVerifier = window.recaptchaVerifier;
                 />
               )}
             </button>
+            {/* Registration Link */}
+            <div className="mt-4 text-center ">
+              <p className="text-[12px] font-medium text-slate-400 tracking-wide">
+                New to the network?
+              </p>
+              <Link
+                href="/supplier/register"
+                className="mt-1 inline-flex items-center gap-1.5 text-[12px] font-bold text-blue-600 hover:text-blue-700 transition-colors group cursor-pointer"
+              >
+                Apply to become a Supplier
+                <ArrowRight
+                  size={14}
+                  className="group-hover:translate-x-0.5 transition-transform"
+                />
+              </Link>
+            </div>
           </div>
         ) : (
           <div className=" animate-in slide-in-from-right-8 duration-500">
             <div className="text-center mb-2">
-              <p className="text-[12px] font-bold  text-slate-400">
+              <p className="text-[13px] font-semibold  text-slate-500">
                 Enter code sent to +91 {phoneNumber}
               </p>
             </div>
@@ -229,30 +246,30 @@ const appVerifier = window.recaptchaVerifier;
               }
               className="w-full px-4 py-3 mb-6 border-2 border-slate-100 focus:border-blue-600 rounded-xl font-semibold text-center text-xl tracking-wider  outline-none bg-slate-50/50"
             />
-            <button 
+            <button
               onClick={handleVerifyOTP}
               disabled={otp.length < 6 || loading}
               className="w-full py-5 mb-6 bg-blue-600 text-white font-black uppercase italic rounded-2xl flex items-center justify-center gap-3 shadow-lg active:scale-[0.98]"
             >
-              {loading ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                "Submit"
-              )}
+              {loading ? <Loader2 className="animate-spin" /> : "Submit"}
             </button>
             <button
               onClick={() => setStep("INPUT")}
-              className="w-full text-[10px] font-black uppercase text-slate-400 hover:text-blue-600 transition-colors"
+              className=" w-full text-[13px] font-bold tracking-wide text-blue-600 hover:text-blue-700 transition-colors text-center cursor-pointer"
             >
               ← Change Number
             </button>
           </div>
         )}
 
-        <p className="mt-4 text-[9px] font-bold text-slate-300 uppercase tracking-[0.2em] text-center leading-loose pt-8 border-t border-slate-50">
-          Secured by{" "}
-          <span className="text-slate-900">PARTO Identity Network</span>
-        </p>
+        <div className="mt-8 text-center">
+          <div className="inline-flex items-center gap-2 py-1.5 px-3 bg-white border border-slate-100 rounded-full">
+            <ShieldCheck className="text-emerald-500 w-3 h-3" />
+            <span className="text-[12px] font-semibold  tracking-wide text-slate-600">
+              Verified Partner Gateway
+            </span>
+          </div>
+        </div>
       </div>
       <div id="recaptcha-container"></div>
     </div>

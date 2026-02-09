@@ -68,7 +68,7 @@ export default function MarketFeed() {
   }
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-6">
       {leads.map((lead) => (
         <LeadCard key={lead.id} lead={lead} variant="all" /> // Updated variant
       ))}
@@ -86,7 +86,7 @@ export default function MarketFeed() {
           </div>
         )}
         {!hasMore && leads.length > 0 && (
-          <p className="text-slate-300 text-[9px] font-black uppercase tracking-[0.3em]">
+          <p className="text-slate-400 text-[13px] font-semibold tracking-[0.1em]">
             End of Live Requests
           </p>
         )}

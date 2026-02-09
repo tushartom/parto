@@ -79,16 +79,10 @@ export function LeadCard({ lead, variant = "all" }) {
           <p className="text-[13px] font-semibold text-blue-600  mt-1">
             {lead.requestedParts.join(" • ")}
           </p>
-          <p className="text-[12px] mt-2 font-semibold text-slate-400">
+          <p className="text-[12px] tracking-wide mt-3 font-semibold text-slate-400">
             Condition:{" "}
             <span className="text-[12px] text-slate-600">{lead.condition}</span>
           </p>
-          <div className="flex items-center gap-1 mt-1">
-            <MapPin size={14} className="text-red-500" />
-            <span className="text-[12px] font-semibold text-slate-600">
-              {lead.locationText}
-            </span>
-          </div>
         </div>
         {interacted && (
           <div className="bg-blue-50 p-1.5 rounded-full border border-blue-100">
@@ -98,17 +92,23 @@ export function LeadCard({ lead, variant = "all" }) {
       </div>
 
       {/* METADATA: Condition, Location, Time */}
-      <div className="grid grid-cols-2 items-center gap-y-4 mb-6  border-t border-slate-50">
+      <div className="grid grid-cols-2 items-center gap-y-4 mb-6 pt-3  border-t border-slate-50">
         {/* LEFT SIDE: Identification & Timing */}
         <div className="space-y-1">
-          <p className="text-[11px] font-semibold text-slate-400  ">
+          <div className="flex items-center gap-1 mt-1">
+            <MapPin size={14} className="text-red-500" />
+            <span className="text-[13px] font-semibold text-slate-600 tracking-wide">
+              {lead.locationText}
+            </span>
+          </div>
+          <p className="text-[13px] font-semibold text-slate-600 ">
+            {format(new Date(lead.createdAt), "dd MMM, hh:mm a")}
+          </p>
+          <p className="text-[13px] font-semibold text-slate-400  ">
             Ref No:{" "}
             <span className="text-slate-600 uppercase">
               #{lead.id.slice(-8)}
             </span>
-          </p>
-          <p className="text-[11px] font-semibold text-slate-400 uppercase">
-            {format(new Date(lead.createdAt), "dd MMM • hh:mm a")}
           </p>
         </div>
 
@@ -153,9 +153,7 @@ export function LeadCard({ lead, variant = "all" }) {
       {/* INTERACTION BAR */}
       <div className="flex items-center justify-between pt-5 border-t-2 border-dashed border-slate-100">
         {/* LEFT SIDE: Contextual Label */}
-        <div className="text-[10px] font-black uppercase text-slate-400 tracking-widest italic">
-         
-        </div>
+        <div className="text-[10px] font-black uppercase text-slate-400 tracking-widest italic"></div>
 
         {/* PRIMARY CONTACT ACTIONS: Scaled Down */}
         <div className="flex gap-2.5">

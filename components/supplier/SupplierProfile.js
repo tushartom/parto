@@ -45,17 +45,17 @@ export default function SupplierProfile({ supplier, allBrands }) {
           </button>
         </div>
 
-        <h2 className="mt-6 text-2xl font-black text-gray-900 tracking-tight">
+        <h2 className="mt-6 text-2xl font-bold text-gray-900 ">
           {supplier.shopName}
         </h2>
-        <div className="flex flex-col items-center gap-4 mt-2">
-          <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
+        <div className="flex flex-col items-center gap-4 mt-3">
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-100">
             Verified Partner
           </span>
           {/* NEW INTEGRATED BUTTON */}
           <button
             onClick={() => setIsEditing(true)}
-            className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-2xl text-xs font-black transition-all active:scale-95 border border-gray-100"
+            className="flex items-center gap-2 px-6 py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 rounded-2xl text-[13px] tracking-wide font-bold transition-all active:scale-95 border border-gray-100"
           >
             <Edit2 size={14} strokeWidth={3} />
             Edit Profile
@@ -67,7 +67,7 @@ export default function SupplierProfile({ supplier, allBrands }) {
       <div className="grid grid-cols-1 gap-4">
         {/* Business Identity */}
         <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
-          <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+          <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-6 flex items-center gap-2">
             <Store size={14} strokeWidth={3} /> Business Identity
           </h3>
           <div className="space-y-6">
@@ -87,19 +87,19 @@ export default function SupplierProfile({ supplier, allBrands }) {
 
         {/* Specialization */}
         <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
-          <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+          <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-6 flex items-center gap-2">
             <Package size={14} strokeWidth={3} /> Specialization
           </h3>
           <div className="space-y-6">
             <div>
-              <p className="text-[10px] font-black text-gray-400 uppercase mb-3">
+              <p className="text-[11px] font-semibold text-gray-400 uppercase mb-3">
                 Brands Covered
               </p>
               <div className="flex flex-wrap gap-2">
                 {supplier.brands.map((brand) => (
                   <span
                     key={brand.id}
-                    className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-2xl text-[11px] font-bold text-gray-700"
+                    className="px-4 py-2 bg-gray-50 border border-gray-100 rounded-2xl text-[12px] font-bold text-gray-700"
                   >
                     {brand.name}
                   </span>
@@ -108,7 +108,7 @@ export default function SupplierProfile({ supplier, allBrands }) {
             </div>
             <div className="pt-5 border-t border-gray-50 flex items-center justify-between">
               <div>
-                <p className="text-[10px] font-black text-gray-400 uppercase">
+                <p className="text-[11px] font-semibold text-gray-400 uppercase">
                   Dealing In
                 </p>
                 <p className="text-[12px] tracking-wide font-black mt-0.5 uppercase text-gray-600">
@@ -121,15 +121,15 @@ export default function SupplierProfile({ supplier, allBrands }) {
 
         {/* Physical Address */}
         <div className="bg-white border border-gray-100 rounded-[2.5rem] p-8 shadow-sm">
-          <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+          <h3 className="text-[12px] font-bold text-gray-400 uppercase tracking-[0.1em] mb-4 flex items-center gap-2">
             <MapPin size={14} strokeWidth={3} /> Full Address
           </h3>
           <p className="text-md font-bold text-gray-800 leading-tight">
             {supplier.locationText}
           </p>
-          <div className="text-[8px] font-black text-gray-400 bg-gray-100 px-2 mt-4 text-center py-1 rounded-lg uppercase tracking-widest">
+          {/* <div className="text-[12px] font-semibold text-gray-400 bg-gray-100 px-2 mt-4 text-center py-1 rounded-lg  tracking-wide">
             Locked
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -160,7 +160,7 @@ function ProfileField({ label, value, icon: Icon, isLocked }) {
           )}
         </div>
         <div>
-          <p className="text-[10px] font-black text-gray-400 uppercase leading-none tracking-wider">
+          <p className="text-[11px] font-semibold text-gray-400 uppercase leading-none tracking-wider">
             {label}
           </p>
           <p className="text-[14px] font-bold text-gray-800 mt-1.5">{value}</p>
@@ -168,7 +168,7 @@ function ProfileField({ label, value, icon: Icon, isLocked }) {
       </div>
 
       {isLocked && (
-        <div className="text-[8px] mt-4 text-center font-black text-gray-400 bg-gray-100 px-2 py-1 rounded-lg uppercase tracking-widest">
+        <div className="text-[12px] font-semibold text-gray-400 bg-gray-100 px-2 mt-4 text-center py-1 rounded-lg  tracking-wide">
           Locked
         </div>
       )}
