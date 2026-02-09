@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PartAdCard } from "../PartAdCard";
+import { incrementInquiryCount, incrementViewCount } from "@/app/actions/supplier/analytics";
 import {
   MapPin,
   ShieldCheck,
@@ -23,7 +24,25 @@ import { cn } from "@/lib/utils";
 export default function PartAdDetailsTemplate({ ad, relatedAds = [] }) {
   const router = useRouter();
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  useEffect(() => {
+    // Passive tracking: Increment view on mount
+    incrementViewCount(ad.id);
+  }, [ad.id]);
   const images = ad.images || [];
+
+  const handleWhatsAppInquiry = async () => {
+    // 1. Fire and forget the count increment
+    incrementInquiryCount(ad.id);
+
+    // 2. Construct the message
+    const message = encodeURIComponent(
+      `Hi, I'm interested in your listing: ${ad.title} (Slug: ${ad.slug})`,
+    );
+    const whatsappUrl = `https://wa.me/${ad.supplier.whatsAppNumber}?text=${message}`;
+
+    // 3. Open in new tab
+    window.open(whatsappUrl, "_blank");
+  };
 
   return (
     <div className="bg-[#FAFAFA] min-h-screen">
@@ -51,7 +70,7 @@ export default function PartAdDetailsTemplate({ ad, relatedAds = [] }) {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         {/* LEFT COLUMN: Gallery */}
         <div className="lg:col-span-7 space-y-6">
           <div className="relative aspect-square bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
@@ -137,14 +156,13 @@ export default function PartAdDetailsTemplate({ ad, relatedAds = [] }) {
             </div>
 
             {/* Direct Action */}
-            <a
-              href={`https://wa.me/${ad.supplier.whatsAppNumber}?text=Hi, I am interested in your listing: ${ad.title}`}
-              target="_blank"
+            <button
+              onClick={handleWhatsAppInquiry}
               className="w-full py-5 bg-blue-600 hover:bg-blue-700 text-white rounded-[1.5rem] flex items-center justify-center gap-3 font-bold text-sm uppercase tracking-[0.15em] transition-all shadow-xl shadow-blue-100 active:scale-[0.98]"
             >
               <MessageCircle size={20} strokeWidth={2.5} />
               Contact via WhatsApp
-            </a>
+            </button>
           </div>
 
           {/* Technical Specifications */}
@@ -222,10 +240,10 @@ export default function PartAdDetailsTemplate({ ad, relatedAds = [] }) {
       {/* 3. RELATED PARTS SECTION */}
       {/* 3. RELATED PARTS SECTION - Carefully Designed Background */}
       {relatedAds.length > 0 && (
-        <section className="mt-24 relative w-screen left-1/2 -translate-x-1/2 bg-gradient-to-b from-blue-50/80 via-white to-white border-t border-slate-100/50 pt-20 pb-32">
+        <section className=" relative w-screen left-1/2 -translate-x-1/2 bg-gradient-to-b from-blue-50/80 via-white to-white border-t border-slate-100/50 pt-16 pb-32">
           <div className="max-w-7xl mx-auto px-6">
             {/* Refined Section Header */}
-            <div className="flex flex-col items-center text-center mb-16 space-y-4">
+            <div className="flex flex-col items-center text-center mb-10 space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100/40 border border-blue-100 rounded-full">
                 <PackageSearch size={12} className="text-blue-600" />
                 <span className="text-[10px] font-black text-blue-700 uppercase tracking-[0.2em]">

@@ -77,7 +77,7 @@ export default function MyAdCard({ ad, onEdit, onDelete, onStatusChange }) {
             </h4>
 
             {/* METADATA LINE */}
-            <p className="text-[10px] text-slate-400 font-semibold mt-1 tracking-wider">
+            <p className="text-[12px] text-slate-500 font-semibold mt-1 tracking-wider">
               {ad.brand?.name} • {ad.model?.name} • {ad.year}
             </p>
           </div>
@@ -124,15 +124,15 @@ export default function MyAdCard({ ad, onEdit, onDelete, onStatusChange }) {
       {/* 4. BOTTOM ANALYTICS (Only visible for Active Ads) */}
       {ad.status === "ACTIVE" && (
         <div className="mt-5 flex items-center justify-end gap-5 border-t border-slate-50 pt-4">
-          <div className="flex items-center gap-1.5 text-slate-300">
+          <div className="flex items-center gap-1.5 text-slate-500">
             <Eye size={14} strokeWidth={3} />
-            <span className="text-[11px] font-normal ">
+            <span className="text-[12px] font-normal ">
               {ad.views || 0} Views
             </span>
           </div>
-          <div className="flex items-center gap-1.5 text-slate-300">
+          <div className="flex items-center gap-1.5 text-slate-500">
             <MessageSquare size={14} strokeWidth={3} />
-            <span className="text-[11px] font-normal ">
+            <span className="text-[12px] font-normal ">
               {ad.inquiries || 0} Chats
             </span>
           </div>

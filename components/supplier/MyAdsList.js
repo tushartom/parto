@@ -90,13 +90,29 @@ const handleStatusChange = async (adId, newStatus) => {
  };
   return (
     <div className="space-y-6">
+      {/* 1. SEARCH & FILTER BAR */}
+      <div className="flex gap-2 sticky top-[73px] z-10 bg-gray-50/95 backdrop-blur-sm py-2">
+        <div className="relative flex-1">
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+            size={18}
+          />
+          <input
+            type="text"
+            placeholder="Search by part or car..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm font-medium"
+          />
+        </div>
+      </div>
       {/* FILTER CHIPS */}
       <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => setActiveTab(tab.value)}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl whitespace-nowrap text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl whitespace-nowrap text-[14px] font-bold transition-all ${
               activeTab === tab.value
                 ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
                 : "bg-white border border-gray-100 text-gray-500"
@@ -114,22 +130,6 @@ const handleStatusChange = async (adId, newStatus) => {
             </span>
           </button>
         ))}
-      </div>
-      {/* 1. SEARCH & FILTER BAR */}
-      <div className="flex gap-2 sticky top-[73px] z-10 bg-gray-50/95 backdrop-blur-sm py-2">
-        <div className="relative flex-1">
-          <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-            size={18}
-          />
-          <input
-            type="text"
-            placeholder="Search by part or car..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-2xl outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm font-medium"
-          />
-        </div>
       </div>
 
       {/* 2. THE LISTING GRID */}
