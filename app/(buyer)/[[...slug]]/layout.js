@@ -19,60 +19,83 @@ function Header() {
         {/* LOGO */}
         <Link href="/" className="flex items-center group">
           <span className="text-3xl font-black italic uppercase tracking-tighter text-slate-900">
-            PAR<span className="text-blue-600 group-hover:text-slate-900 transition-colors">TO</span>
+            PAR
+            <span className="text-blue-600 group-hover:text-slate-900 transition-colors">
+              TO
+            </span>
           </span>
         </Link>
 
-        {/* MENU TRIGGER & DROPDOWN CONTAINER */}
-        <div className="relative">
-          <button 
-            onClick={() => setIsOpen(!isOpen)}
-            className={`p-3 rounded-2xl border-2 transition-all active:scale-95 ${
-              isOpen 
-                ? "bg-slate-900 border-slate-900 text-white" 
-                : "bg-slate-50 border-slate-100 text-slate-900 hover:border-slate-900"
-            }`}
+        <div className="flex flex-row items-center gap-4">
+          <Link
+            href="/about"
+            className="relative group py-2 text-[11px] font-black uppercase tracking-[0.2em] text-slate-900 transition-colors"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            About Parto
+            
+          </Link>
+          {/* MENU TRIGGER & DROPDOWN CONTAINER */}
+          <div className="relative">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className={`p-3 rounded-2xl border-2 transition-all active:scale-95 ${
+                isOpen
+                  ? "bg-slate-900 border-slate-900 text-white"
+                  : "bg-slate-50 border-slate-100 text-slate-900 hover:border-slate-900"
+              }`}
+            >
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
 
-          {/* COMPACT DROPDOWN BOX */}
-          {isOpen && (
-            <>
-              {/* Invisible backdrop to close menu on outside click */}
-              <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-              
-              <div className="absolute right-0 mt-4 w-72 bg-white border-2 border-slate-900 rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                <div className="p-4 flex flex-col gap-2">
-                  <p className="px-4 py-2 text-[13px] font-black uppercase tracking-[0.1em] text-slate-600">
-                    Supplier Portal
-                  </p>
-                  
-                  <Link
-                    href="/supplier/login"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors group"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                      <LogIn className="w-5 h-5 text-blue-600 group-hover:text-white" />
-                    </div>
-                    <span className="font-bold uppercase  text-xs tracking-wide">Login</span>
-                  </Link>
+            {/* COMPACT DROPDOWN BOX */}
+            {isOpen && (
+              <>
+                {/* Invisible backdrop to close menu on outside click */}
+                <div
+                  className="fixed inset-0 z-10"
+                  onClick={() => setIsOpen(false)}
+                />
 
-                  <Link
-                    href="/supplier/register"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-4 p-4 rounded-2xl bg-slate-900 text-white hover:bg-blue-600 transition-colors group"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-                      <UserPlus className="w-5 h-5" />
-                    </div>
-                    <span className="font-bold uppercase  text-xs tracking-wide">Register</span>
-                  </Link>
+                <div className="absolute right-0 mt-4 w-72 bg-white border-2 border-slate-900 rounded-[2rem] shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="p-4 flex flex-col gap-2">
+                    <p className="px-4 py-2 text-[13px] font-black uppercase tracking-[0.1em] text-slate-600">
+                      Supplier Portal
+                    </p>
+
+                    <Link
+                      href="/supplier/login"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors group"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center group-hover:bg-blue-600 transition-colors">
+                        <LogIn className="w-5 h-5 text-blue-600 group-hover:text-white" />
+                      </div>
+                      <span className="font-bold uppercase  text-xs tracking-wide">
+                        Login
+                      </span>
+                    </Link>
+
+                    <Link
+                      href="/supplier/register"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-4 p-4 rounded-2xl bg-slate-900 text-white hover:bg-blue-600 transition-colors group"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                        <UserPlus className="w-5 h-5" />
+                      </div>
+                      <span className="font-bold uppercase  text-xs tracking-wide">
+                        Register
+                      </span>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </>
-          )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

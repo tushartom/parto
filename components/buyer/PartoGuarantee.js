@@ -14,7 +14,7 @@ export default function PartoGuarantee() {
                 </div>
               </div>
               <div>
-                <h2 className="text-4xl font-black italic text-center uppercase tracking-tighter mb-4">
+                <h2 className="text-4xl font-bold italic text-center uppercase tracking-tighter mb-4">
                   The PARTO <span className="text-blue-600">Guarantee</span>
                 </h2>
                 <p className="text-slate-600 font-bold text-center leading-relaxed text-sm md:text-base">
