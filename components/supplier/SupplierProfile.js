@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Camera,
   MapPin,
@@ -13,9 +13,50 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import EditProfileDrawer from "./EditProfileDrawer";
+import { updateSupplierProfileImage } from "@/app/actions/supplier/updateProfile";
 
 export default function SupplierProfile({ supplier, allBrands }) {
   const [isEditing, setIsEditing] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const [isUploading, setIsUploading] = useState(false);
+  // Use local state for immediate UI feedback
+  const [displayImage, setDisplayImage] = useState(supplier.shopImageUrl);
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 1. Instant Preview
+    const localUrl = URL.createObjectURL(file);
+    setDisplayImage(localUrl);
+    setIsUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      // 2. Call the server action with the old Public ID
+      const result = await updateSupplierProfileImage(
+        supplier.id, // Pass the supplier ID
+        formData,
+        supplier.shopImagePublicId,
+      );
+
+      if (result.success) {
+        // Handle database update confirmation or router.refresh()
+        setDisplayImage(result.url);
+      } else {
+        alert("Failed to upload image. Please try again.");
+        setDisplayImage(supplier.shopImageUrl); // Revert on error
+      }
+    } catch (err) {
+      setDisplayImage(supplier.shopImageUrl);
+    } finally {
+      setIsUploading(false);
+      URL.revokeObjectURL(localUrl); // Cleanup memory
+    }
+  };
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 pb-40 relative">
@@ -26,13 +67,25 @@ export default function SupplierProfile({ supplier, allBrands }) {
           <div className="w-32 h-32 rounded-[2.8rem] bg-white p-1 shadow-2xl shadow-blue-100 ring-1 ring-gray-100 overflow-hidden">
             <div className="w-full h-full rounded-[2.5rem] overflow-hidden relative">
               <Image
-                src={supplier.shopImageUrl || "/placeholder-shop.jpg"}
+                src={displayImage || "/placeholder-shop.jpg"}
                 alt={supplier.shopName}
                 fill
-                className="object-cover"
+                className={`object-cover transition-opacity duration-300 ${isUploading ? "opacity-50" : "opacity-100"}`}
               />
+              {isUploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/5">
+                  <div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                </div>
+              )}
             </div>
           </div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
 
           {/* Verified Badge Overlay */}
           <div className="absolute -top-1 -right-1 bg-blue-600 text-white p-1.5 rounded-2xl border-4 border-white shadow-lg">
@@ -40,7 +93,11 @@ export default function SupplierProfile({ supplier, allBrands }) {
           </div>
 
           {/* Camera Trigger */}
-          <button className="absolute -bottom-2 -left-2 p-3 bg-white text-gray-400 rounded-2xl shadow-xl border border-gray-50 hover:text-blue-600 transition-all active:scale-90">
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
+            className="absolute -bottom-2 -left-2 p-3 bg-white text-gray-400 rounded-2xl shadow-xl border border-gray-50 hover:text-blue-600 transition-all active:scale-90"
+          >
             <Camera size={20} strokeWidth={2.5} />
           </button>
         </div>

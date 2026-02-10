@@ -15,6 +15,7 @@ import {
   IdentificationCard,
 } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 import { MissionParallax } from "./MissionParallax";
 
@@ -136,11 +137,7 @@ export default function AboutPageTemplate() {
               color: "text-blue-600",
             },
           ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              {...fadeIn}
-              className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-all"
-            >
+            <div key={idx} className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 hover:shadow-xl transition-all">
               <div className="space-y-8">
                 <item.icon size={40} weight="duotone" className={item.color} />
                 <div className="space-y-6">
@@ -168,7 +165,7 @@ export default function AboutPageTemplate() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -178,7 +175,7 @@ export default function AboutPageTemplate() {
       {/* SECTION 4: THE PROCESS (Steps) */}
       <section className="bg-slate-50 py-32">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 space-y-4">
+          <div className="text-center mb-12 md:mb-20 space-y-4">
             <h2 className="text-4xl font-black italic uppercase tracking-tight">
               How Parto Operates
             </h2>
@@ -187,7 +184,7 @@ export default function AboutPageTemplate() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
             {[
               {
                 step: "01",
@@ -241,12 +238,12 @@ export default function AboutPageTemplate() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-12 py-5 bg-blue-600 text-white rounded-full font-black uppercase text-[13px] tracking-[0.1em] shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all">
+            <Link href="/" className="px-12 py-5 bg-blue-600 text-white rounded-full font-black uppercase text-[13px] tracking-[0.1em] shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all">
               Explore the Market
-            </button>
-            <button className="px-12 py-5 bg-white border border-slate-200 text-slate-900 rounded-full font-black uppercase text-[13px] tracking-[0.1em] hover:bg-slate-50 transition-all">
+            </Link>
+            <Link href="/supplier/register" className="px-12 py-5 bg-white border border-slate-200 text-slate-900 rounded-full font-black uppercase text-[13px] tracking-[0.1em] hover:bg-slate-50 transition-all">
               Register as a Dealer
-            </button>
+            </Link>
           </div>
         </motion.div>
       </section>

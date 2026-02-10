@@ -29,7 +29,7 @@ function Header() {
         <div className="flex flex-row items-center gap-4">
           <Link
             href="/about"
-            className="relative group py-2 text-[11px] font-black uppercase tracking-[0.2em] text-slate-900 transition-colors"
+            className="relative group py-2 text-[11px] font-black uppercase tracking-[0.1em] text-slate-900 transition-colors"
           >
             About Parto
             
